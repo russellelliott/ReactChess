@@ -1,24 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import Board1 from "./boards/board1";
+
+//For the router/navbar stuff
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <nav>
+          <Link to="/"> Home </Link>
+          <Link to="/board1"> Board1</Link>
+                  
+        </nav>
+        <Routes>
+              <Route path="/" element={<Board1/>} />
+              <Route path="/board1" element={ <Board1 /> } />
+        </Routes>
+      </Router>
+   
   );
 }
 
