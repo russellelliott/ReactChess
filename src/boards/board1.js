@@ -24,6 +24,9 @@ export default function PlayRandomMoveEngine() {
   }
 
   function onDrop(sourceSquare, targetSquare) {
+    var piece = game.get(sourceSquare).type;
+
+    //works for traditional move, but not promotion
     const move = makeAMove({
       from: sourceSquare,
       to: targetSquare,
@@ -31,7 +34,22 @@ export default function PlayRandomMoveEngine() {
     });
 
     // illegal move
-    if (move === null) return false;
+    if (move === null){
+      console.log("promotion move");
+
+      //auto promote to queen
+      const move = makeAMove({
+        from: sourceSquare,
+        to: targetSquare,
+        promotion: 'q' // always promote to a queen for example simplicity
+      });
+
+      if(move === null){
+        console.log("illegal move");
+        return false;
+      }
+      
+    }
     
     //setTimeout(makeRandomMove, 200);
     return true;
