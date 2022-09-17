@@ -27,13 +27,13 @@ export default function PlayRandomMoveEngine() {
     const move = makeAMove({
       from: sourceSquare,
       to: targetSquare,
-      promotion: 'q' // always promote to a queen for example simplicity
+      //promotion: 'q' // always promote to a queen for example simplicity
     });
 
     // illegal move
     if (move === null) return false;
     
-    setTimeout(makeRandomMove, 200);
+    //setTimeout(makeRandomMove, 200);
     return true;
   }
 
