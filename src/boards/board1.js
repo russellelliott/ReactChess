@@ -2,10 +2,40 @@ import { useState } from "react";
 import { Chess } from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 import { Chessboard } from "react-chessboard";
 
+const movesList = []; //stores the moves
 export default function PlayRandomMoveEngine() {
   const [game, setGame] = useState(new Chess());
 
+  function getMoveOptions(movesList){
+    var allMoves = game.moves();
+    //the next move must share the same letter and/or number as the previous move
+    if(movesList.length == 0){
+      console.log("no previous moves");
+      return allMoves; //return a list of all possible moves
+    }
+    var prevMove = movesList[movesList.length-1];
+    console.log("the previous move was: ");
+    console.log(prevMove);
+    var letter = prevMove[0];
+    var number = prevMove[1];
+    console.log("The next move must have %s and/or %s.", letter, number);
+    const validMoves = []; //a list of valid moves
+    //array for each
+    //https://www.freecodecamp.org/news/javascript-array-foreach-tutorial-how-to-iterate-through-elements-in-an-array-with-map/
+    allMoves.forEach(function(move) {
+        if (true) {
+            validMoves.push(move); //add move to valid moves list
+        }
+    })
+
+    return validMoves;
+  
+    
+  }
+
   function makeAMove(move) {
+    var moveOptions = getMoveOptions(movesList);
+    console.log(moveOptions);
     var FEN = game.fen();
     console.log(FEN)
     //const gameCopy = { ...game };
@@ -25,7 +55,6 @@ export default function PlayRandomMoveEngine() {
 
   function onDrop(sourceSquare, targetSquare) {
     var piece = game.get(sourceSquare).type;
-
     //works for traditional move, but not promotion
     const move = makeAMove({
       from: sourceSquare,
@@ -50,6 +79,10 @@ export default function PlayRandomMoveEngine() {
       }
       
     }
+
+    //move was legal
+    movesList.push(targetSquare); //add destination square to list
+    console.log(movesList);
     
     //setTimeout(makeRandomMove, 200);
     return true;
