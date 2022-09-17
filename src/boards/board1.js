@@ -23,10 +23,16 @@ export default function PlayRandomMoveEngine() {
     //array for each
     //https://www.freecodecamp.org/news/javascript-array-foreach-tutorial-how-to-iterate-through-elements-in-an-array-with-map/
     allMoves.forEach(function(move) {
-        if (true) {
+      console.log(move);
+        if (move.includes(letter) || move.includes(number)) { //check if move has same letter or number
+          console.log("move: ", move);
+          var endSquare = move.slice(-2);
+          console.log("end square: ", endSquare);
             validMoves.push(move); //add move to valid moves list
         }
     })
+    console.log("valid moves");
+    console.log(validMoves);
 
     return validMoves;
   
