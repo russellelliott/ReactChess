@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Board1 from "./boards/board1";
+import Home from "./Home"
 
 //For the router/navbar stuff
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -14,7 +15,7 @@ function App() {
                   
         </nav>
         <Routes>
-              <Route path="/" element={<Board1/>} />
+              <Route path="/" element={<Home/>} />
               <Route path="/board1" element={ <Board1 /> } />
         </Routes>
       </Router>
