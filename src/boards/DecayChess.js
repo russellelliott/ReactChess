@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Chess } from "chess.js";
+import { Chess, QUEEN } from "chess.js";
 import { Chessboard } from "react-chessboard";
 
 export default function PlayRandomMoveEngine() {
@@ -21,6 +21,43 @@ export default function PlayRandomMoveEngine() {
     const randomIndex = Math.floor(Math.random() * possibleMoves.length);
     makeAMove(possibleMoves[randomIndex]);
   }*/
+
+  //select a piece that could decay
+
+
+  var pieceValues = {
+    "p" : 1, //pawn
+    "n": 3, //bishop
+    "b": 3, //bishop
+    "r" : 5, //rook
+    "q" : 9 //queen
+  }
+
+  var avgGameMoves = 40; //average moves in chess game
+  //https://chess.stackexchange.com/questions/2506/what-is-the-average-length-of-a-game-of-chess
+
+
+  function selectPiece(piece, turn){
+    var chance = pieceValues[piece]/avgGameMoves;
+    var prob = Math.random(0, 1);
+    if (prob<=chance){
+        console.log("Queen could decay");
+        getPositions(game, piece);
+    }
+  }
+
+  //https://github.com/jhlywa/chess.js/issues/174
+  const getPositions = (game, piece) => {
+    return [].concat(...game.board()).map((p, index) => {
+      if (p !== null && p.type === piece.type && p.color === piece.color) {
+        return index
+      }
+    }).filter(Number.isInteger).map((piece_index) => {
+      const row = 'abcdefgh'[piece_index % 8]
+      const column = Math.ceil((64 - piece_index) / 8)
+      return row + column
+    })
+  }
 
   function onDrop(sourceSquare, targetSquare) {
     //works for traditional move, but not promotion
@@ -48,7 +85,8 @@ export default function PlayRandomMoveEngine() {
       
     }
 
-    //move was legal
+    //move was legal, make a decay
+    selectPiece('q', game.turn);
     return true;
   }
 
