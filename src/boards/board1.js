@@ -3,10 +3,15 @@ import { Chess } from "chess.js"; // import Chess from  "chess.js"(default) if r
 import { Chessboard } from "react-chessboard";
 
 const movesList = []; //stores the moves
+var piece; //variable to store the piece that was just moved
 export default function PlayRandomMoveEngine() {
   const [game, setGame] = useState(new Chess());
 
-  function getMoveOptions(movesList){
+  function getMoveOptions(movesList, piece){
+    console.log("whose turn is it?")
+    console.log(game.turn());
+    console.log("getMoveOptions piece (if undefined that means there was no previous move): ");
+    console.log(piece);
     var allMoves = game.moves();
     //the next move must share the same letter and/or number as the previous move
     if(movesList.length == 0){
@@ -59,8 +64,21 @@ export default function PlayRandomMoveEngine() {
     makeAMove(possibleMoves[randomIndex]);
   }
 
+  function onClick(){
+    console.log("piece clicked");
+  }
+
+  function onDropX(sourceSquare, targetSquare){
+    onDrop(sourceSquare, targetSquare);
+    console.log("onDropX piece: ");
+    console.log(piece);
+    getMoveOptions(movesList, piece);
+  }
+
   function onDrop(sourceSquare, targetSquare) {
-    var piece = game.get(sourceSquare).type;
+    piece = game.get(sourceSquare).type;
+    console.log("onDrop piece: ");
+    console.log(piece);
     //works for traditional move, but not promotion
     const move = makeAMove({
       from: sourceSquare,
@@ -88,11 +106,19 @@ export default function PlayRandomMoveEngine() {
 
     //move was legal
     movesList.push(targetSquare); //add destination square to list
-    console.log(movesList);
+    /*console.log(movesList);
+
+    console.log("here are the legal moves at this point");
+    console.log(game.moves());
+    console.log(game.turn());
+
+    var moveOptions = getMoveOptions(movesList);
+    console.log(moveOptions);*/
     
     //setTimeout(makeRandomMove, 200);
     return true;
   }
-
-  return <Chessboard position={game.fen()} onPieceDrop={onDrop} />;
+  //multiple onlclick events
+  //https://upmostly.com/tutorials/adding-multiple-functions-inside-a-single-onclick-event-handler
+  return <Chessboard position={game.fen()} onPieceDrop={onDropX}/>;
 }
