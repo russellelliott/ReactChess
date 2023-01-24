@@ -123,7 +123,7 @@ export default function PlayRandomMoveEngine() {
     selectPiece('r', game.turn());
     selectPiece('b', game.turn());
     selectPiece('n', game.turn());
-    selectPiece('p', game.turn());
+    selectPiece('p', game.turn()); //pawns disappear
 
     //works for traditional move, but not promotion
     const move = makeAMove({
