@@ -43,6 +43,15 @@ export default function PlayRandomMoveEngine() {
     "q" : "r" //queen
   }
 
+  var names = {
+    "k" : "king",
+    "p" : "pawn", //pawn
+    "n": "knight", //bishop
+    "b": "bishop", //bishop
+    "r" : "rook", //rook
+    "q" : "queen" //queen
+  }
+
   var avgGameMoves = 40; //average moves in chess game
   //https://chess.stackexchange.com/questions/2506/what-is-the-average-length-of-a-game-of-chess
 
@@ -51,7 +60,7 @@ export default function PlayRandomMoveEngine() {
     var chance = pieceValues[piece]/avgGameMoves;
     var prob = Math.random(0, 1);
     if (prob<=chance){
-        console.log("Queen could decay");
+        console.log(names[piece] + " has decayed into " + names[decayPieces[piece]]);
         console.log(turn);
         changePiece(piece, turn);
         //console.log(stuff);
