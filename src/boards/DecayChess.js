@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Chess, QUEEN } from "chess.js";
+import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
 
 export default function PlayRandomMoveEngine() {
@@ -24,13 +24,23 @@ export default function PlayRandomMoveEngine() {
 
   //select a piece that could decay
 
-
+  //values of each of the pieces
   var pieceValues = {
     "p" : 1, //pawn
     "n": 3, //bishop
     "b": 3, //bishop
     "r" : 5, //rook
     "q" : 9 //queen
+  }
+
+  //what pieces will decay to
+  //queen -> rook -> bishop -> knight -> pawn -> king
+  var decayPieces = {
+    "p" : "k", //pawn
+    "n": "p", //bishop
+    "b": "n", //bishop
+    "r" : "b", //rook
+    "q" : "r" //queen
   }
 
   var avgGameMoves = 40; //average moves in chess game
@@ -42,21 +52,43 @@ export default function PlayRandomMoveEngine() {
     var prob = Math.random(0, 1);
     if (prob<=chance){
         console.log("Queen could decay");
-        getPositions(game, piece);
+        console.log(turn);
+        changePiece(piece, turn);
+        //console.log(stuff);
     }
   }
 
   //https://github.com/jhlywa/chess.js/issues/174
-  const getPositions = (game, piece) => {
-    return [].concat(...game.board()).map((p, index) => {
-      if (p !== null && p.type === piece.type && p.color === piece.color) {
-        return index
-      }
-    }).filter(Number.isInteger).map((piece_index) => {
-      const row = 'abcdefgh'[piece_index % 8]
-      const column = Math.ceil((64 - piece_index) / 8)
-      return row + column
-    })
+  function changePiece(piece, turn){
+    //first, find the piece in question
+    var rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    var cols = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
+    for(var row in rows){
+        for(var col in cols){
+            //console.log(row, col)
+            //console.log(game.get(rows[row]+cols[col]));
+            var current = game.get(rows[row]+cols[col]);
+            if(current.type == piece && current.color == turn){
+                console.log(game.get(rows[row]+cols[col]));
+                //found the piece, replace it
+                game.remove(rows[row]+cols[col]);
+                game.put({ type: decayPieces[piece], color: turn }, rows[row]+cols[col]);
+                //var newFEN = game.fen()
+                var FEN = game.fen();
+                const gameCopy = new Chess(FEN)
+                //const result = gameCopy.move(move);
+                setGame(gameCopy);
+                break;
+            }
+            /*if (game.get(row+col) == {'type': piece, 'color': turn}){
+                console.log("yes");
+            }*/
+        }
+    }
+
+
+    //chess.put({ type: piece, color: turn }, 'a5') // put a black pawn on square
   }
 
   function onDrop(sourceSquare, targetSquare) {
@@ -86,7 +118,7 @@ export default function PlayRandomMoveEngine() {
     }
 
     //move was legal, make a decay
-    selectPiece('q', game.turn);
+    selectPiece('q', game.turn());
     return true;
   }
 
