@@ -67,6 +67,22 @@ export default function PlayRandomMoveEngine() {
     }
   }
 
+  /*function exists(piece){
+    var rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    var cols = ['1', '2', '3', '4', '5', '6', '7', '8'];
+    for(var row in rows){
+        for(var col in cols){
+            //console.log(row, col)
+            //console.log(game.get(rows[row]+cols[col]));
+            var current = game.get(rows[row]+cols[col]);
+            if(current.type == piece && current.color == turn){
+                return true;
+            }
+        }
+    }
+    return false;
+  }*/
+
   //https://github.com/jhlywa/chess.js/issues/174
   function changePiece(piece, turn){
     //first, find the piece in question
@@ -88,7 +104,7 @@ export default function PlayRandomMoveEngine() {
                 const gameCopy = new Chess(FEN)
                 //const result = gameCopy.move(move);
                 setGame(gameCopy);
-                break;
+                return; //if we do "break" instead, it repalces ALL of that piece.
             }
             /*if (game.get(row+col) == {'type': piece, 'color': turn}){
                 console.log("yes");
@@ -101,6 +117,14 @@ export default function PlayRandomMoveEngine() {
   }
 
   function onDrop(sourceSquare, targetSquare) {
+
+    //make decay before move is done; even when valid, causes problems
+    selectPiece('q', game.turn());
+    selectPiece('r', game.turn());
+    selectPiece('b', game.turn());
+    selectPiece('n', game.turn());
+    selectPiece('p', game.turn());
+
     //works for traditional move, but not promotion
     const move = makeAMove({
       from: sourceSquare,
@@ -126,8 +150,7 @@ export default function PlayRandomMoveEngine() {
       
     }
 
-    //move was legal, make a decay
-    selectPiece('q', game.turn());
+    //move was legal
     return true;
   }
 
