@@ -62,6 +62,9 @@ export default function PlayRandomMoveEngine(props) {
   }
 
   function onSquareRightClick(square) {
+    console.log(typeof square);
+    console.log(rightClickedSquares);
+
     const colour = "rgba(0, 0, 255, 0.4)";
     setRightClickedSquares({
       ...rightClickedSquares,
