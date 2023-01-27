@@ -3,7 +3,7 @@ import './App.css';
 import Board1 from "./boards/board1";
 import Board2 from "./boards/board2";
 import Color from "./boards/color";
-import Color2 from "./boards/color";
+import Color2 from "./boards/color2";
 
 
 import DecayChess from "./boards/DecayChess";
