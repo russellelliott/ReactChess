@@ -24,7 +24,7 @@ export default function PlayRandomMoveEngine() {
       movesList.push(
         {
           "piece": piece,
-          "column": targetSquare[0],
+          "col": targetSquare[0],
           "row": targetSquare[1],
         }
       );
@@ -113,7 +113,7 @@ export default function PlayRandomMoveEngine() {
     //get the details
     var rightCol = movesList[0].col;
     var rightRow = movesList[0].row;
-    var rightPiece = movesList[0].piece;
+    var rightPiece = movesList[0].piece.type;
 
     //swap the turn so we can get the moves we want
     swapTurn();
@@ -126,6 +126,9 @@ export default function PlayRandomMoveEngine() {
       var col = to[0];
       var row = to[1];
       var piece = item.piece;
+      console.log(col, rightCol);
+      console.log(row, rightRow);
+      console.log(piece, rightPiece);
       if(col==rightCol || row==rightRow || piece==rightPiece){
         console.log("this move is valid");
       }
