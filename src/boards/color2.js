@@ -125,7 +125,26 @@ export default function PlayRandomMoveEngine(props) {
 
     return true;
   }
-  
+
+  function onDrop(sourceSquare, targetSquare) {
+    let move = null;
+    safeGameMutate((game) => {
+      move = game.move({
+        from: sourceSquare,
+        to: targetSquare,
+        promotion: "q" // always promote to a queen for example simplicity
+      });
+    });
+
+    if (move === null) return false; // illegal move
+    validateMove(sourceSquare, targetSquare);
+    setMoveSquares({
+      [sourceSquare]: { backgroundColor: "rgba(255, 255, 0, 0.4)" },
+      [targetSquare]: { backgroundColor: "rgba(255, 255, 0, 0.4)" }
+    });
+
+    return true;
+  }
 
   function validateMove(sourceSquare, targetSquare) {
     let move = sourceSquare + targetSquare;
@@ -151,6 +170,7 @@ export default function PlayRandomMoveEngine(props) {
   return (
     <Chessboard
       position={game.fen()}
+      onPieceDrop={onDrop}
       boardOrientation={orientation}
       areArrowsAllowed={true}
       arePremovesAllowed={true}

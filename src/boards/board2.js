@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
 
-export default function PlayRandomMoveEngine() {
+export default function PlayRandomMoveEngine(props) {
   const [game, setGame] = useState(new Chess());
+
+  const [rightClickedSquares, setRightClickedSquares] = useState({});
+  useEffect(() => {}, [props]);
+
+  function onSquareClick(targetSquare) {
+    setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
+  }
 
   function makeAMove(move) {
     var FEN = game.fen();
@@ -154,5 +161,11 @@ export default function PlayRandomMoveEngine() {
   //https://natclark.com/tutorials/javascript-auto-repeat/
   //setInterval(getMoveOptions, 2000); // Repeat myFunction every 2 seconds
 
-  return <Chessboard position={game.fen()} onPieceDrop={onDropX}/>;
+  return <Chessboard
+  position={game.fen()}
+  onPieceDrop={onDropX}
+  onSquareClick={onSquareClick}
+  customSquareStyles={{
+    ...rightClickedSquares
+  }}/>;
 }
