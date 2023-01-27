@@ -14,12 +14,14 @@ function App() {
     <Router>
         <nav>
           <Link to="/"> Home </Link>
-          <Link to="/board2"> Board1</Link>
+          <Link to="/board1"> Board1</Link>
+          <Link to="/board2"> Board2</Link>
           <Link to="/DecayChess"> Decay Chess</Link>
                   
         </nav>
         <Routes>
               <Route path="/" element={<Home/>} />
+              <Route path="/board1" element={ <Board1 /> } />
               <Route path="/board2" element={ <Board2 /> } />
               <Route path="/DecayChess" element={ <DecayChess /> } />
         </Routes>
