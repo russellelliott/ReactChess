@@ -110,11 +110,25 @@ export default function PlayRandomMoveEngine() {
 
     console.log(movesList[0]);
 
+    //get the details
+    var rightCol = movesList[0].col;
+    var rightRow = movesList[0].row;
+    var rightPiece = movesList[0].piece;
+
     //swap the turn so we can get the moves we want
     swapTurn();
 
-    game.moves().forEach(function (item, index) {
+    //iterate through the moves
+    game.moves({ verbose: true }).forEach(function (item, index) {
       console.log(item, index);
+      //for each of the moves
+      var to = item.to;
+      var col = to[0];
+      var row = to[1];
+      var piece = item.piece;
+      if(col==rightCol || row==rightRow || piece==rightPiece){
+        console.log("this move is valid");
+      }
     });
 
     /*movesList.push(
