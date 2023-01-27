@@ -5,22 +5,6 @@ import { Chessboard } from "react-chessboard";
 export default function PlayRandomMoveEngine() {
   const [game, setGame] = useState(new Chess());
 
-  //colored squares
-  //https://codesandbox.io/s/elastic-grass-fwmc8
-  const [rightClickedSquares, setRightClickedSquares] = useState({});
-
-  function onSquareRightClick(square) {
-    const colour = "rgba(0, 0, 255, 0.4)";
-    setRightClickedSquares({
-      ...rightClickedSquares,
-      [square]:
-        rightClickedSquares[square] &&
-        rightClickedSquares[square].backgroundColor === colour
-          ? undefined
-          : { backgroundColor: colour }
-    });
-  }
-
   function makeAMove(move) {
     var FEN = game.fen();
     console.log(FEN)
@@ -170,5 +154,5 @@ export default function PlayRandomMoveEngine() {
   //https://natclark.com/tutorials/javascript-auto-repeat/
   //setInterval(getMoveOptions, 2000); // Repeat myFunction every 2 seconds
 
-  return <Chessboard position={game.fen()} onPieceDrop={onDropX} onSquareClick={onSquareRightClick}/>;
+  return <Chessboard position={game.fen()} onPieceDrop={onDropX}/>;
 }

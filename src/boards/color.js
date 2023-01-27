@@ -76,6 +76,10 @@ export default function PlayRandomMoveEngine(props) {
     });
   }
 
+  //setRightClickedSquares({"e2": {backgroundColor: "rgba(0, 0, 255, 0.4)"}})
+
+  //rightClickedSquares = {"e2": {backgroundColor: "rgba(0, 0, 255, 0.4)"}};
+
   function makeOpposingMove() {
     console.log({ opposingMove: opposingMove });
     if (opposingMove == null) return;
