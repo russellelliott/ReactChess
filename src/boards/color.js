@@ -97,7 +97,7 @@ export default function PlayRandomMoveEngine(props) {
   }
 
   function onSquareClick(targetSquare) {
-    setRightClickedSquares({e3: {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
+    setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
     // getMoveOptions(targetSquare); // need to figure out mobile move options
     setPieceSquare(targetSquare);
     if (piece === "") return;
