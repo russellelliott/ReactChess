@@ -77,6 +77,13 @@ export default function PlayRandomMoveEngine() {
   3. must be the same piece type that was previously moved
   */
 
+  function swapTurn() {
+    let tokens = game.fen().split(" ");
+    tokens[1] = game.turn() === "b" ? "w" : "b";
+    tokens[3] = "-";
+    game.load(tokens.join(" "));
+  }
+  
   //history gets deleted when a player makes illegal move
   var movesList = []
   function getMoveOptions(){
@@ -102,6 +109,13 @@ export default function PlayRandomMoveEngine() {
     console.log("3. The piece being moved must be a ", piece);*/
 
     console.log(movesList[0]);
+
+    //swap the turn so we can get the moves we want
+    swapTurn();
+
+    game.moves().forEach(function (item, index) {
+      console.log(item, index);
+    });
 
     /*movesList.push(
       {
