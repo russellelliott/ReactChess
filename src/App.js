@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import Board1 from "./boards/board1";
+import Board2 from "./boards/board2";
+
 import DecayChess from "./boards/DecayChess";
 import Home from "./Home"
 
@@ -12,13 +14,13 @@ function App() {
     <Router>
         <nav>
           <Link to="/"> Home </Link>
-          <Link to="/board1"> Board1</Link>
+          <Link to="/board2"> Board1</Link>
           <Link to="/DecayChess"> Decay Chess</Link>
                   
         </nav>
         <Routes>
               <Route path="/" element={<Home/>} />
-              <Route path="/board1" element={ <Board1 /> } />
+              <Route path="/board2" element={ <Board2 /> } />
               <Route path="/DecayChess" element={ <DecayChess /> } />
         </Routes>
       </Router>
