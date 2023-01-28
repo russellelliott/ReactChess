@@ -102,6 +102,8 @@ export default function PlayRandomMoveEngine(props) {
   //history gets deleted when a player makes illegal move
   var movesList = []
   function getMoveOptions(){
+    //clear the previous squares
+    setRightClickedSquares({});
     //movesList stores the lists of moves
 
 
