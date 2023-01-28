@@ -50,9 +50,11 @@ export default function PlayRandomMoveEngine(props) {
   }
 
   function isValid(target){
-    validMoves.forEach(function (item, index) {
+    //var found = false;
+    /*validMoves.forEach(function (item, index) {
       console.log(item, index);
       console.log("what we are looking for: ", item, target);
+      console.log(String(item)==String(target))
       //set the colors
       //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
       if(String(item)==String(target)){
@@ -62,6 +64,13 @@ export default function PlayRandomMoveEngine(props) {
 
     });
     //no valid found; return false
+    return false;*/
+    for(var i=0; i<validMoves.length; i++){
+      console.log(validMoves[i]);
+      if(validMoves[i]==target){
+        return true;
+      }
+    }
     return false;
   }
 
