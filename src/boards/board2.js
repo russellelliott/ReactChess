@@ -89,11 +89,33 @@ export default function PlayRandomMoveEngine(props) {
     }else{
       console.log("somethign wrong");
     }*/
-    console.log("we are trying to move to", move.to);
+    /*console.log("we are trying to move to", move.to);
     if(isValid(move.to)){
-      console.log("this move is valid");
+      console.log("VALID MOVE");
     }else{
-      console.log("this move is invalid");
+      console.log("INVALID MOVE");
+      move = null;
+    }
+
+    if(move.to in validMoves){
+      console.log("YES");
+    }else{
+      console.log("NO");
+    }*/
+
+    console.log("VALID MOVES");
+    console.log(rightClickedSquares);
+    for(var i=0; i<rightClickedSquares.length; i++){
+      console.log(rightClickedSquares[i]);
+    }
+    console.log(validMoves);
+    console.log("VALID MOVES");
+
+    //iterate through properties of object
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
+
+    for (const property in rightClickedSquares) {
+      console.log(property);
     }
 
     // illegal move
