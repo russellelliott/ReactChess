@@ -52,17 +52,17 @@ export default function PlayRandomMoveEngine(props) {
   function isValid(target){
     validMoves.forEach(function (item, index) {
       console.log(item, index);
-      console.log("what we are looking for: ", item.to, target);
+      console.log("what we are looking for: ", item, target);
       //set the colors
       //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
-      if(item.to==target){
+      if(String(item)==String(target)){
         //valid square to land on
         return true;
       }
-      //no valid found; return false
-      return false;
 
     });
+    //no valid found; return false
+    return false;
   }
 
   function onDrop(sourceSquare, targetSquare) {
@@ -80,6 +80,7 @@ export default function PlayRandomMoveEngine(props) {
     }else{
       console.log("somethign wrong");
     }*/
+    console.log("we are trying to move to", move.to);
     if(isValid(move.to)){
       console.log("this move is valid");
     }else{
