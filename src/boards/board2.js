@@ -158,11 +158,20 @@ export default function PlayRandomMoveEngine(props) {
       }
     });
 
+    //store the valid squares
+    var object = {}
     //list of valid moves
     console.log("the moves");
     validMoves.forEach(function (item, index) {
       console.log(item, index);
+      console.log(item.to);
+      //set the colors
+      //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
+      object[item.to] = {backgroundColor: 'rgba(0, 0, 255, 0.4)'};
+
     });
+
+    setRightClickedSquares(object);
 
     
 
