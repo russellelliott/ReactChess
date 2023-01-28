@@ -9,7 +9,13 @@ export default function PlayRandomMoveEngine(props) {
   useEffect(() => {}, [props]);
 
   function onSquareClick(targetSquare) {
-    setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
+
+    var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
+    object["e4"] = {backgroundColor: 'rgba(0, 0, 255, 0.4)'};
+    setRightClickedSquares(object);
+    //setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
+    //setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
+
   }
 
   function makeAMove(move) {
