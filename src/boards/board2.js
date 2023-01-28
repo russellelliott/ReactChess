@@ -58,8 +58,11 @@ export default function PlayRandomMoveEngine(props) {
       //promotion: 'q' // always promote to a queen for example simplicity
     });
 
-    if(movesList.includes(move)){
+    console.log("move: ", move);
+    if(validMoves.includes(move)){
       console.log("this is a valid move");
+    }else{
+      console.log("somethign wrong");
     }
 
     // illegal move
@@ -101,9 +104,11 @@ export default function PlayRandomMoveEngine(props) {
   
   //history gets deleted when a player makes illegal move
   var movesList = []
+  var validMoves = [];
   function getMoveOptions(){
     //clear the previous squares
     setRightClickedSquares({});
+    validMoves = [];
     //movesList stores the lists of moves
 
 
@@ -148,7 +153,15 @@ export default function PlayRandomMoveEngine(props) {
       console.log(piece, rightPiece);
       if(col==rightCol || row==rightRow || piece==rightPiece){
         console.log("this move is valid");
+        //validMoves.append(col+row)
+        validMoves.push(item);
       }
+    });
+
+    //list of valid moves
+    console.log("the moves");
+    validMoves.forEach(function (item, index) {
+      console.log(item, index);
     });
 
     
