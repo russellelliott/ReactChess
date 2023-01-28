@@ -116,6 +116,9 @@ export default function PlayRandomMoveEngine(props) {
 
     for (const property in rightClickedSquares) {
       console.log(property, targetSquare);
+      if(String(property)==String(targetSquare)){
+        console.log("VALID MOVE")
+      }
     }
 
     // illegal move
