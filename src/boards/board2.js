@@ -49,6 +49,22 @@ export default function PlayRandomMoveEngine(props) {
     getMoveOptions();*/
   }
 
+  function isValid(target){
+    validMoves.forEach(function (item, index) {
+      console.log(item, index);
+      console.log("what we are looking for: ", item.to, target);
+      //set the colors
+      //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
+      if(item.to==target){
+        //valid square to land on
+        return true;
+      }
+      //no valid found; return false
+      return false;
+
+    });
+  }
+
   function onDrop(sourceSquare, targetSquare) {
 
     //works for traditional move, but not promotion
@@ -59,10 +75,15 @@ export default function PlayRandomMoveEngine(props) {
     });
 
     console.log("move: ", move);
-    if(validMoves.includes(move)){
+    /*if(validMoves.includes(move)){
       console.log("this is a valid move");
     }else{
       console.log("somethign wrong");
+    }*/
+    if(isValid(move.to)){
+      console.log("this move is valid");
+    }else{
+      console.log("this move is invalid");
     }
 
     // illegal move
@@ -104,7 +125,7 @@ export default function PlayRandomMoveEngine(props) {
   
   //history gets deleted when a player makes illegal move
   var movesList = []
-  var validMoves = [];
+  var validMoves = game.moves(); //first move, all moves valid
   function getMoveOptions(){
     //clear the previous squares
     setRightClickedSquares({});
