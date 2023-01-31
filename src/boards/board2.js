@@ -4,6 +4,7 @@ import { Chessboard } from "react-chessboard";
 
 export default function PlayRandomMoveEngine(props) {
   const [game, setGame] = useState(new Chess());
+  const [started, setStarted] = useState(false); //indicate if game started
 
   const [startSquares, setStartSquares] = useState({}); //indicates squares pieces can start from
   const [rightClickedSquares, setRightClickedSquares] = useState({});
@@ -138,8 +139,12 @@ export default function PlayRandomMoveEngine(props) {
         }
       }
     }*/
+    if(started == false){
+      setStarted(true);
+    }
+    console.log(started);
 
-    if(targetSquare in rightClickedSquares && sourceSquare in startSquares){
+    if(started && targetSquare in rightClickedSquares && sourceSquare in startSquares){
       alert("valid");
     }
 
