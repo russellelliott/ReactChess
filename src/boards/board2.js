@@ -119,10 +119,22 @@ export default function PlayRandomMoveEngine(props) {
     //iterate through properties of object
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
 
-    for (const property in rightClickedSquares) {
+    /*for (const property in rightClickedSquares) {
       console.log(property, targetSquare);
       if(String(property)==String(targetSquare)){
         console.log("VALID MOVE")
+      }
+    }*/
+
+    for (const finish in rightClickedSquares) {
+      console.log(finish, targetSquare);
+      for (const start in startSquares) {
+        console.log(start, sourceSquare);
+        if(String(finish)==String(targetSquare) && String(start)==String(sourceSquare)){
+          console.log("VALID MOVE")
+        }else{
+          console.log("invalid")
+        }
       }
     }
 
