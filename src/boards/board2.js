@@ -126,16 +126,21 @@ export default function PlayRandomMoveEngine(props) {
       }
     }*/
 
-    for (const finish in rightClickedSquares) {
+    /*for (const finish in rightClickedSquares) {
       console.log(finish, targetSquare);
       for (const start in startSquares) {
         console.log(start, sourceSquare);
         if(String(finish)==String(targetSquare) && String(start)==String(sourceSquare)){
           console.log("VALID MOVE")
+          //alert("Your move was valid")
         }else{
           console.log("invalid")
         }
       }
+    }*/
+
+    if(targetSquare in rightClickedSquares && sourceSquare in startSquares){
+      alert("valid");
     }
 
     // illegal move
@@ -158,6 +163,10 @@ export default function PlayRandomMoveEngine(props) {
     return true;
   }
 
+  //colors
+  var starterColor = 'rgba(0, 255, 0, 0.4)';
+  var endColor = 'rgba(0, 0, 255, 0.4)';
+
   /*get the move options
   1. must end in same column
   OR
@@ -178,6 +187,7 @@ export default function PlayRandomMoveEngine(props) {
   //history gets deleted when a player makes illegal move
   var movesList = []
   var validMoves = game.moves(); //first move, all moves valid
+
   function getMoveOptions(){
     //clear the previous squares
     setStartSquares({});
@@ -242,8 +252,8 @@ export default function PlayRandomMoveEngine(props) {
       console.log(item.to);
       //set the colors
       //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
-      starter[item.from] = {backgroundColor: 'rgba(0, 255, 0, 0.4)'};
-      object[item.to] = {backgroundColor: 'rgba(0, 0, 255, 0.4)'}; //destination
+      starter[item.from] = {backgroundColor: starterColor};
+      object[item.to] = {backgroundColor: endColor}; //destination
 
     });
     setStartSquares(starter);
