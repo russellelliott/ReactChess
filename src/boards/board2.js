@@ -139,14 +139,6 @@ export default function PlayRandomMoveEngine(props) {
         }
       }
     }*/
-    if(started == false){
-      setStarted(true);
-    }
-    console.log(started);
-
-    if(started && targetSquare in rightClickedSquares && sourceSquare in startSquares){
-      alert("valid");
-    }
 
     // illegal move
     if (move === null){
@@ -165,7 +157,26 @@ export default function PlayRandomMoveEngine(props) {
       }
       
     }
-    return true;
+    //secondary move validation
+    /*if(started == false){
+      setStarted(true);
+    }
+    console.log(started);*/
+
+    if(started){
+      if(targetSquare in rightClickedSquares && sourceSquare in startSquares){
+        return true;
+      }else{
+        alert("bad");
+        //return false;
+      }
+      //alert("valid");
+      //the move is valid
+    }else{
+      setStarted(true);
+      return true;
+    }
+    //return true;
   }
 
   //colors
