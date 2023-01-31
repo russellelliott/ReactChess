@@ -168,7 +168,7 @@ export default function PlayRandomMoveEngine(props) {
         return true;
       }else{
         alert("bad");
-        //return false;
+        //return false; //this return false screws up the square colors
       }
       //alert("valid");
       //the move is valid
