@@ -5,6 +5,7 @@ import { Chessboard } from "react-chessboard";
 export default function PlayRandomMoveEngine(props) {
   const [game, setGame] = useState(new Chess());
 
+  const [startSquares, setStartSquares] = useState({}); //indicates squares pieces can start from
   const [rightClickedSquares, setRightClickedSquares] = useState({});
   useEffect(() => {}, [props]);
 
@@ -103,12 +104,16 @@ export default function PlayRandomMoveEngine(props) {
       console.log("NO");
     }*/
 
-    console.log("VALID MOVES");
+    console.log("VALID MOVES ARRAY");
     console.log(rightClickedSquares);
     for(var i=0; i<rightClickedSquares.length; i++){
       console.log(rightClickedSquares[i]);
     }
+    console.log("VALID MOVES LIST");
     console.log(validMoves);
+
+    console.log("STARTER SQUARES LIST");
+    console.log(startSquares);
     console.log("VALID MOVES");
 
     //iterate through properties of object
@@ -163,6 +168,7 @@ export default function PlayRandomMoveEngine(props) {
   var validMoves = game.moves(); //first move, all moves valid
   function getMoveOptions(){
     //clear the previous squares
+    setStartSquares({});
     setRightClickedSquares({});
     validMoves = [];
     //movesList stores the lists of moves
@@ -215,7 +221,8 @@ export default function PlayRandomMoveEngine(props) {
     });
 
     //store the valid squares
-    var object = {}
+    var object = {};
+    var starter = {};
     //list of valid moves
     console.log("the moves");
     validMoves.forEach(function (item, index) {
@@ -223,10 +230,11 @@ export default function PlayRandomMoveEngine(props) {
       console.log(item.to);
       //set the colors
       //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
-      object[item.to] = {backgroundColor: 'rgba(0, 0, 255, 0.4)'};
+      starter[item.from] = {backgroundColor: 'rgba(0, 255, 0, 0.4)'};
+      object[item.to] = {backgroundColor: 'rgba(0, 0, 255, 0.4)'}; //destination
 
     });
-
+    setStartSquares(starter);
     setRightClickedSquares(object);
 
     
@@ -250,8 +258,9 @@ export default function PlayRandomMoveEngine(props) {
   return <Chessboard
   position={game.fen()}
   onPieceDrop={onDropX}
-  onSquareClick={onSquareClick}
+  //onSquareClick={onSquareClick}
   customSquareStyles={{
+    ...startSquares,
     ...rightClickedSquares
   }}/>;
 }
