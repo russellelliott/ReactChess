@@ -76,6 +76,13 @@ export default function PlayRandomMoveEngine(props) {
     return false;
   }
 
+  //undoes the last move in situations where the move is legal in traditional chess, but illegal in our unique set of rules
+  function undoLastMove() {
+    const gameCopy = new Chess(game.fen()); // Create a copy of the current game state
+    gameCopy.undo(); // Undo the last move
+    setGame(gameCopy); // Update the game state with the undone move
+  }  
+
   function onDrop(sourceSquare, targetSquare) {
 
     //works for traditional move, but not promotion
@@ -167,8 +174,9 @@ export default function PlayRandomMoveEngine(props) {
       if(targetSquare in rightClickedSquares && sourceSquare in startSquares){
         return true;
       }else{
-        alert("bad");
-        //return false; //this return false screws up the square colors
+        console.log("illegal move; move must comply with rules")
+        undoLastMove(); //undo the last move to revert player position
+        //return false; //this return false screws up the square colors. this return false should prevent the move from occuring
       }
       //alert("valid");
       //the move is valid
