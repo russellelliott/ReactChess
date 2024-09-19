@@ -8,17 +8,11 @@ export default function PlayRandomMoveEngine(props) {
 
   const [startSquares, setStartSquares] = useState({}); //indicates squares pieces can start from
   const [rightClickedSquares, setRightClickedSquares] = useState({});
+  const [rightRow, setRightRow] = useState(0); //indicate if game started
+  const [rightCol, setRightCol] = useState(0); //indicate if game started
+  const [rightPieceName, setRightPieceName] = useState(""); //indicate if game started
+
   useEffect(() => {}, [props]);
-
-  function onSquareClick(targetSquare) {
-
-    var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
-    object["e4"] = {backgroundColor: 'rgba(0, 0, 255, 0.4)'};
-    setRightClickedSquares(object);
-    //setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
-    //setRightClickedSquares({"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}});
-
-  }
 
   function makeAMove(move) {
     var FEN = game.fen();
@@ -47,33 +41,6 @@ export default function PlayRandomMoveEngine(props) {
       getMoveOptions();
 
     }
-    /*//move was legal
-    getMoveOptions();*/
-  }
-
-  function isValid(target){
-    //var found = false;
-    /*validMoves.forEach(function (item, index) {
-      console.log(item, index);
-      console.log("what we are looking for: ", item, target);
-      console.log(String(item)==String(target))
-      //set the colors
-      //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
-      if(String(item)==String(target)){
-        //valid square to land on
-        return true;
-      }
-
-    });
-    //no valid found; return false
-    return false;*/
-    for(var i=0; i<validMoves.length; i++){
-      console.log(validMoves[i]);
-      if(validMoves[i]==target){
-        return true;
-      }
-    }
-    return false;
   }
 
   //undoes the last move in situations where the move is legal in traditional chess, but illegal in our unique set of rules
@@ -93,24 +60,6 @@ export default function PlayRandomMoveEngine(props) {
     });
 
     console.log("move: ", move);
-    /*if(validMoves.includes(move)){
-      console.log("this is a valid move");
-    }else{
-      console.log("somethign wrong");
-    }*/
-    /*console.log("we are trying to move to", move.to);
-    if(isValid(move.to)){
-      console.log("VALID MOVE");
-    }else{
-      console.log("INVALID MOVE");
-      move = null;
-    }
-
-    if(move.to in validMoves){
-      console.log("YES");
-    }else{
-      console.log("NO");
-    }*/
 
     console.log("VALID MOVES ARRAY");
     console.log(rightClickedSquares);
@@ -123,29 +72,6 @@ export default function PlayRandomMoveEngine(props) {
     console.log("STARTER SQUARES LIST");
     console.log(startSquares);
     console.log("VALID MOVES");
-
-    //iterate through properties of object
-    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
-
-    /*for (const property in rightClickedSquares) {
-      console.log(property, targetSquare);
-      if(String(property)==String(targetSquare)){
-        console.log("VALID MOVE")
-      }
-    }*/
-
-    /*for (const finish in rightClickedSquares) {
-      console.log(finish, targetSquare);
-      for (const start in startSquares) {
-        console.log(start, sourceSquare);
-        if(String(finish)==String(targetSquare) && String(start)==String(sourceSquare)){
-          console.log("VALID MOVE")
-          //alert("Your move was valid")
-        }else{
-          console.log("invalid")
-        }
-      }
-    }*/
 
     // illegal move
     if (move === null){
@@ -165,10 +91,6 @@ export default function PlayRandomMoveEngine(props) {
       
     }
     //secondary move validation
-    /*if(started == false){
-      setStarted(true);
-    }
-    console.log(started);*/
 
     if(started){
       if(targetSquare in rightClickedSquares && sourceSquare in startSquares){
@@ -176,9 +98,7 @@ export default function PlayRandomMoveEngine(props) {
       }else{
         console.log("illegal move; move must comply with rules")
         undoLastMove(); //undo the last move to revert player position
-        //return false; //this return false screws up the square colors. this return false should prevent the move from occuring
       }
-      //alert("valid");
       //the move is valid
     }else{
       setStarted(true);
@@ -212,38 +132,37 @@ export default function PlayRandomMoveEngine(props) {
   var movesList = []
   var validMoves = game.moves(); //first move, all moves valid
 
+  //piece names dictionary
+  const pieceNames = {
+    'p': 'Pawn',
+    'r': 'Rook',
+    'n': 'Knight',
+    'b': 'Bishop',
+    'q': 'Queen',
+    'k': 'King'
+  };
+
   function getMoveOptions(){
     //clear the previous squares
     setStartSquares({});
     setRightClickedSquares({});
     validMoves = [];
     //movesList stores the lists of moves
-
-
-    /*var history = game.history({ verbose: true });
-
-    if(history[0]===undefined){
-      return game.moves();
-    }
-
-    var piece = history[0].piece;
-    var dest = history[0].to;
-    console.log(dest);
-    var col = dest[0];
-    var row = dest[1];
-
-
-    console.log("The next move must involve one of the 3 options:");
-    console.log("1. The piece being moved must land on a space in row ", row);
-    console.log("2. The piece being moved must land on a space in col ", col);
-    console.log("3. The piece being moved must be a ", piece);*/
-
     console.log(movesList[0]);
 
-    //get the details
-    var rightCol = movesList[0].col;
-    var rightRow = movesList[0].row;
+    //get the details of valid moves
+    //var rightCol = movesList[0].col;
+    setRightCol(movesList[0].col);
+    //var rightRow = movesList[0].row;
+    setRightRow(movesList[0].row);
     var rightPiece = movesList[0].piece.type;
+    //var rightPieceName = pieceNames[rightPiece.toLowerCase()]; // Convert to lowercase to match dictionary keys
+    setRightPieceName(pieceNames[rightPiece.toLowerCase()]);
+
+    console.log("The next move must involve one of the 3 options:");
+    console.log("1. The piece being moved must land on a space in row", rightRow);
+    console.log("2. The piece being moved must land on a space in col", rightCol);
+    console.log("3. The piece being moved must be a", rightPieceName);
 
     //swap the turn so we can get the moves we want
     swapTurn();
@@ -274,39 +193,43 @@ export default function PlayRandomMoveEngine(props) {
     validMoves.forEach(function (item, index) {
       console.log(item, index);
       console.log(item.to);
-      //set the colors
-      //var object = {"e3": {backgroundColor: 'rgba(0, 0, 255, 0.4)'}};
-      starter[item.from] = {backgroundColor: starterColor};
-      object[item.to] = {backgroundColor: endColor}; //destination
+
+      //set the colors for the valid moves
+      starter[item.from] = {backgroundColor: starterColor}; //piece that can be moved is highlighted green
+      object[item.to] = {backgroundColor: endColor}; //destination any piece can do is highlighted blue
 
     });
     setStartSquares(starter);
     setRightClickedSquares(object);
-
-    
-
-    /*movesList.push(
-      {
-        "piece": piece,
-        "column": col,
-        "row": row,
-      }
-    );
-    var info = movesList[0];
-    console.log(info);
-
-    var moves = game.moves();*/
   }
 
-  //https://natclark.com/tutorials/javascript-auto-repeat/
-  //setInterval(getMoveOptions, 2000); // Repeat myFunction every 2 seconds
+  return (
+    <>
+      <Chessboard
+        position={game.fen()}
+        onPieceDrop={onDropX}
+        customSquareStyles={{
+          ...startSquares,
+          ...rightClickedSquares
+        }}
+      />
+      {started && (
+        <div>
+          <h2>Instructions</h2>
+          <p>Move any of the pieces highlighted in green to any of the spaces highlighted in blue following traditional chess move rules.</p>
+          <h2>Technical Specifics</h2>
+          <p>The next move must involve one of the 3 options:</p>
+          <ul>
+            <li>The piece being moved must land on a space in row {rightRow}</li>
+            <li>The piece being moved must land on a space in column {rightCol}</li>
+            <li>The piece being moved must be a {rightPieceName}</li>
+          </ul>
 
-  return <Chessboard
-  position={game.fen()}
-  onPieceDrop={onDropX}
-  //onSquareClick={onSquareClick}
-  customSquareStyles={{
-    ...startSquares,
-    ...rightClickedSquares
-  }}/>;
+          <h2>Inspiration</h2>
+          <p>Inspured by this <a href = "https://www.youtube.com/watch?v=JHN22fL4LVw">Youtube Video</a>. Here are the rules: "Chess, but every move you make move you make must share the same letter or number with the previous move"</p>
+        </div>
+      )}
+    </>
+  );
+  
 }
