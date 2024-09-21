@@ -10,6 +10,11 @@ export default function PlayRandomMoveEngine(props) {
   const [rightClickedSquares, setRightClickedSquares] = useState({});
   const [rightRow, setRightRow] = useState(0); //indicate if game started
   const [rightCol, setRightCol] = useState(0); //indicate if game started
+
+  const [rightRowDisplay, setRightRowDisplay] = useState(0); //indicate if game started
+  const [rightColDisplay, setRightColDisplay] = useState(0); //indicate if game started
+
+
   const [rightPieceName, setRightPieceName] = useState(""); //indicate if game started
 
   useEffect(() => {}, [props]);
@@ -178,8 +183,23 @@ export default function PlayRandomMoveEngine(props) {
       console.log(col, rightCol);
       console.log(row, rightRow);
       console.log(piece, rightPiece);
-      if(col==rightCol || row==rightRow || piece==rightPiece){
+
+      console.log("history: ", movesList) //stores the most recent move
+      //movesList[0].col and movesList[0].row store the correct most recent col and row
+      console.log(movesList[0].col, rightCol);
+      //var rightRow = movesList[0].row;
+      console.log(movesList[0].row, rightRow);
+      console.log(movesList[0].piece.type);
+
+      console.log("right column?", "move to", col, "history", movesList[0].col)
+      console.log("right column?", "move to", row, "history", movesList[0].row)
+      console.log("right piece?", "move to", piece, "history", movesList[0].piece.type)
+      
+      //if instead of rightCol and rightRow you use rightColDisplay and rightRowDisplay, it changes the valid moves
+      if(col===movesList[0].col || row===movesList[0].row || piece===movesList[0].piece.type){
+      //if(col===rightCol || row===rightRow || piece===rightPiece){
         console.log("this move is valid");
+        console.log(item)
         //validMoves.append(col+row)
         validMoves.push(item);
       }
@@ -189,7 +209,18 @@ export default function PlayRandomMoveEngine(props) {
     var object = {};
     var starter = {};
     //list of valid moves
-    console.log("the moves");
+    console.log("MOVE DEBUG DATA");
+    //the rightCol and rightRow from here are the right ones to display
+    //rightCol and rightRow are 0 0 during the first move. this seems to represent move right before most recent move?
+    console.log(rightCol);
+    console.log(rightRow);
+
+    setRightColDisplay(rightCol);
+    setRightRowDisplay(rightRow);
+
+    console.log(rightPiece);
+    console.log("the moves", validMoves);
+    console.log("END MOVE DEBUG DATA");
     validMoves.forEach(function (item, index) {
       console.log(item, index);
       console.log(item.to);
